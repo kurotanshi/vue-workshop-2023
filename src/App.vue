@@ -15,38 +15,38 @@ const toggle = ref(false);
           v-for="i in 3"
           :key="i"
           @click="toggle = !toggle"
-          class="bg-slate-200 block border rounded-sm p-2 mx-2 border-gray-500 min-w-[300px]"
+          class="border rounded-sm bg-slate-200 border-gray-500 mx-2 min-w-[300px] p-2 block"
         >
           <!-- column -->
-          <div class="block overflow-hidden text-ellipsis w-4/5 text-lg">
+          <div class="text-ellipsis text-lg w-4/5 block overflow-hidden">
             標題
           </div>
-          <!-- <textarea class="resize-none overflow-hidden border-none w-full p-1 h-8 block"></textarea> -->
+          <!-- <textarea class="border-none h-8 w-full p-1 resize-none overflow-hidden block"></textarea> -->
 
           <!-- tasks -->
           <div
-            class="block my-2 w-full py-2 px-3 bg-white overflow-hidden select-none"
+            class="bg-white my-2 w-full py-2 px-3 block overflow-hidden select-none"
           >
-            <div class="block font-bold">卡片標題</div>
-            <div class="overflow-hidden text-ellipsis">卡片內容</div>
+            <div class="font-bold block">卡片標題</div>
+            <div class="text-ellipsis overflow-hidden">卡片內容</div>
           </div>
 
           <div
-            class="block my-2 w-full py-2 px-3 bg-white overflow-hidden select-none"
+            class="bg-white my-2 w-full py-2 px-3 block overflow-hidden select-none"
           >
-            <div class="block font-bold">卡片標題</div>
-            <div class="overflow-hidden text-ellipsis">卡片內容</div>
+            <div class="font-bold block">卡片標題</div>
+            <div class="text-ellipsis overflow-hidden">卡片內容</div>
           </div>
           <!-- tasks -->
 
           <!-- add new task -->
           <div class="my-3">
             <div
-              class="bg-slate-200 p-2 hover:bg-slate-300 cursor-pointer text-slate-500"
+              class="cursor-pointer bg-slate-200 p-2 text-slate-500 hover:bg-slate-300"
             >
               + 點擊以新增任務
             </div>
-            <!-- <textarea class="block w-full resize-none p-2 h-10" placeholder="為這張卡片輸入標題"></textarea> -->
+            <!-- <textarea class="h-10 w-full p-2 block resize-none" placeholder="為這張卡片輸入標題"></textarea> -->
           </div>
           <!-- add new task -->
         </div>
@@ -54,11 +54,11 @@ const toggle = ref(false);
 
         <!-- add new card -->
         <div
-          class="bg-slate-200 block border rounded-sm p-2 mx-2 border-gray-500 w-[300px] cursor-pointer bg-opacity-70 hover:bg-opacity-90 min-w-[300px]"
+          class="border rounded-sm cursor-pointer bg-slate-200 bg-opacity-70 border-gray-500 mx-2 min-w-[300px] p-2 w-[300px] block hover:bg-opacity-90"
         >
           <div class="block select-none">+ 新增其他列表</div>
           <!-- <div>
-            <input type="text" ref="target" placeholder="為列表輸入標題" class="block w-full p-2" />
+            <input type="text" ref="target" placeholder="為列表輸入標題" class="w-full p-2 block" />
           </div> -->
         </div>
         <!-- add new card -->
@@ -68,26 +68,26 @@ const toggle = ref(false);
     <!-- lightbox -->
     <div
       v-if="toggle"
-      class="fixed top-0 left-0 w-full h-full bg-slate-800 z-100 bg-opacity-70"
+      class="h-full bg-slate-800 bg-opacity-70 w-full top-0 left-0 z-100 fixed"
     >
       <div
-        class="w-1/2 h-auto block relative mx-auto top-[15vh] bg-white py-8 px-12"
+        class="bg-white h-auto mx-auto py-8 px-12 top-[15vh] w-1/2 block relative"
       >
         <div>
           <input
             ref="target"
             type="text"
-            class="w-full p-2 text-xl border mb-6"
+            class="border text-xl mb-6 w-full p-2"
           />
         </div>
 
         <textarea
-          class="w-full h-[300px] p-3 overflow-x-hidden overflow-y-auto resize-none border"
+          class="border h-[300px] w-full p-3 overflow-x-hidden overflow-y-auto resize-none"
         ></textarea>
 
-        <div class="text-right mt-4">
+        <div class="mt-4 text-right">
           <button
-            class="border bg-rose-500 text-white py-2 px-4 hover:bg-rose-700 mr-6"
+            class="border bg-rose-500 text-white mr-6 py-2 px-4 hover:bg-rose-700"
           >
             刪除
           </button>
