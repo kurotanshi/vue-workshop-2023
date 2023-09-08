@@ -1,5 +1,9 @@
-import { ref, computed } from "vue";
+import { ref, watch } from "vue";
 import { defineStore } from "pinia";
+import { useRouter } from "vue-router";
+
+const uid = () =>
+  Math.random().toString(36).substring(2) + Date.now().toString(36);
 
 const defaultList = [
   {
@@ -37,5 +41,97 @@ const defaultList = [
 ];
 
 export const useStore = defineStore("store", () => {
-  return {};
+  const $router = useRouter();
+
+  const lists = ref(
+    JSON.parse(localStorage.getItem("trello-lists")) || defaultList
+  );
+
+  const currentEditTask = ref({});
+
+  // 開啟編輯燈箱
+  const openEditTask = (cardId, taskId) => {
+    const card = lists.value.find((list) => list.id === cardId);
+    const task = card.tasks.find((task) => task.id === taskId);
+
+    $router.push(`/task/${cardId}/${taskId}`);
+
+    currentEditTask.value = {
+      cardId,
+      ...task,
+    };
+  };
+
+  // 清空 currentEditTask 代表關閉燈箱
+  const closeEditTask = () => {
+    currentEditTask.value = {};
+    $router.push(`/`);
+  };
+
+  // 更新 task 內容
+  const updateTask = (cardId, taskId, title = "", content = "") => {
+    const card = lists.value.find((list) => list.id === cardId);
+    const task = card.tasks.find((task) => task.id === taskId);
+    task.title = title;
+    task.content = content;
+    closeEditTask();
+  };
+
+  // 修改標題
+  const updateListTitle = (cardId = "", title = "") => {
+    const card = lists.value.find((list) => list.id === cardId);
+    card.title = title;
+  };
+
+  // 新增任務
+  const addTask = (cardId = "", title = "") => {
+    if (!cardId || !title) return;
+
+    const card = lists.value.find((list) => list.id === cardId);
+    card.tasks.push({
+      id: uid(),
+      title,
+      content: "",
+    });
+  };
+
+  // 刪除任務
+  const deleteTask = (cardId, taskId) => {
+    const card = lists.value.find((list) => list.id === cardId);
+    card.tasks = card.tasks.filter((task) => task.id !== taskId);
+    closeEditTask();
+  };
+
+  // 新增卡片
+  const addNewCard = (title = "") => {
+    if (!title) return;
+
+    lists.value.push({
+      id: uid(),
+      title,
+      tasks: [],
+    });
+  };
+
+  // 為 lists 加入 watch 監聽
+  watch(
+    lists,
+    (val) => {
+      // 當 list 變動時，將變動後的值存入 localStorage
+      localStorage.setItem("trello-lists", JSON.stringify(val));
+    },
+    { deep: true }
+  );
+
+  return {
+    lists,
+    currentEditTask,
+    openEditTask,
+    closeEditTask,
+    updateTask,
+    updateListTitle,
+    addTask,
+    deleteTask,
+    addNewCard,
+  };
 });
